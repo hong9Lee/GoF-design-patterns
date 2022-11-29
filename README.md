@@ -100,6 +100,95 @@ System.out.println(object == object1) ==> false
 
 
 
+<details markdown="1">
+<summary> 2. Factory method Pattern  </summary>  
+
+> 구체적으로 어떤 인스턴스를 만들지는 서브클래스가 정한다.  
+다양한 구현체가 있고, 그 중에서 특정한 구현체를 만들 수 있는 다양한 팩토리를 제공할 수 있다.
+팩토리 패턴을 적용하면 변경에는 닫혀있고 확장에는 열려있는 개방폐쇄 원칙을 지키는 소프트웨어를 개발할 수 있다.
+
+
+```
+-- old
+기존 ShipFactory Class에서 분기에 의한 제품을 생산하고 있다.
+public static Ship orderShip(String name, String email) {
+
+  // Customizing for specific name
+  if (name.equalsIgnoreCase("whiteship")) {
+    ship.setLogo("\uD83D\uDEE5️");
+  } else if (name.equalsIgnoreCase("blackship")) {
+    ship.setLogo("⚓");
+  }
+
+  // coloring
+  if (name.equalsIgnoreCase("whiteship")) {
+    ship.setColor("whiteship");
+  } else if (name.equalsIgnoreCase("blackship")) {
+    ship.setColor("black");
+  }
+...
+
+
+-- new
+// ShipFactory 클래스를 Interface로 만들고 이를 상속받은 제품별 Factory 클래스를 생성한다.
+// default 메서드를 사용해 Interface 내부에서 구현이 가능하다.
+
+- ShipFactory Interface
+public interface ShipFactory {
+
+    default Ship orderShip(String name, String email) {
+        validate(name, email);
+        prepareFor(name);
+
+        Ship ship = createShip();
+        sendEmailTo(email, ship);
+        return ship;
+    }
+...
+
+- WhiteShipFactory Class
+public class WhiteShipFactory implements ShipFactory{
+
+    @Override
+    public Ship createShip() {
+        return new WhiteShip();
+    }
+
+// use
+Ship whiteship = new WhiteShipFactory().orderShip("WhiteShip", "hong@email.com");
+Ship blackship = new BlackShipFactory().orderShip("Blackship", "keesun@mail.com");
+```
+
+
+```
+// 하지만, 위와 같이 사용하면 변경에 열려있다. 따라서 아래의 print 메서드와 같이 ShipFactory 인터페이스 형태로 받아 사용한다면 변경에 닫힌 소스를 구현할 수 있다.
+
+Client client = new Client();
+client.print(new WhiteShipFactory(), "whiteship", "lee@email.com");
+client.print(new BlackShipFactory(), "whiteship", "lee@email.com");
+
+private void print(ShipFactory shipFactory, String name, String email) {
+  System.out.println(shipFactory.orderShip(name, email));
+}
+
+```
+
+```
+실무에서는 아래와 같은 factory method pattern을 많이 사용한다.
+
+public Object createProduct(String name) {
+  if (name.equals("whiteship")) {
+    return new WhiteShip();
+  } else if (name.equals("blackship")) {
+    return new BlackShip();
+  }
+
+  throw new IllegalArgumentException();
+}
+```
+
+
+</details>
 
 
 
