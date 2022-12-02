@@ -174,7 +174,9 @@ private void print(ShipFactory shipFactory, String name, String email) {
 ```
 
 ```
-실무에서는 아래와 같은 factory method pattern을 많이 사용한다.
+실무에서는 아래와 같은 단순한 factory method pattern을 많이 사용한다.
+=> 매개변수의 값에 따라 또는 메소드에 따라 각기 다른 인스턴스를 리턴하는 단순한 버전의 팩토리 패턴
+
 
 public Object createProduct(String name) {
   if (name.equals("whiteship")) {
@@ -185,6 +187,13 @@ public Object createProduct(String name) {
 
   throw new IllegalArgumentException();
 }
+
+
+JAVA  
+- java.lang.Calendar OR java.lang.NumberFormat  
+
+스프링 BeanFactory  
+- Object 타입의 Product를 만드는 BeanFactory라는 Creator가 있다.
 ```
 
 
