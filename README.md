@@ -107,6 +107,7 @@ System.out.println(object == object1) ==> false
 다양한 구현체가 있고, 그 중에서 특정한 구현체를 만들 수 있는 다양한 팩토리를 제공할 수 있다.
 팩토리 패턴을 적용하면 변경에는 닫혀있고 확장에는 열려있는 개방폐쇄 원칙을 지키는 소프트웨어를 개발할 수 있다.
 
+<img width="815" alt="ship_factory" src="https://user-images.githubusercontent.com/94272140/205433622-66f3ff3f-aa9f-4d4e-992a-861009bfd8fc.png">
 
 ```
 -- old
@@ -195,9 +196,96 @@ JAVA
 스프링 BeanFactory  
 - Object 타입의 Product를 만드는 BeanFactory라는 Creator가 있다.
 ```
+</details>
+
+
+
+
+
+
+
+
+<details markdown="1">
+<summary> 3. Abstract Factory Pattern  </summary>  
+
+
+> 서로 관련있는 여러 객체를 만들어주는 인터페이스  
+구체적으로 어떤 클래스의 인스턴스를 사용하는지 감출 수 있다.  
+클라이언트 코드에서 구체적인 클래스의 의존성을 제거한다.  
+
+![ship_abstract_factory](https://user-images.githubusercontent.com/94272140/205433590-3c64f954-bb97-49c6-ac8e-08b080ae818a.png)
+
+```
+Abstract Factory Pattern은 Factory pattern과 다르게 팩토리를 사용하는 방법에 초점을 두고있다.
+
+// 사용
+ShipFactory shipFactory = new WhiteShipFactory(new WhitePartsProFactory());
+Ship ship = shipFactory.createShip();
+
+
+// WhiteShipFactory
+구체적인 팩토리 클래스 내부에서 추상화를 시켜놓은 배에 사용될 Parts 클래스를 주입받아 사용
+private ShipPartsFactory shipPartsFactory;
+
+public WhiteShipFactory(ShipPartsFactory shipPartsFactory) {
+  this.shipPartsFactory = shipPartsFactory;
+}
+
+@Override
+public Ship createShip() {
+  Ship ship = new WhiteShip();
+  ship.setAnchor(shipPartsFactory.createAnchor());
+  ship.setWheel(shipPartsFactory.createWheel());
+  return ship;
+}
+```
+
+
+
+
+ 
+
+
+
+
+
 
 
 </details>
+
+
+<details markdown="1">
+<summary> 4. Factory Method Pattern VS Abstract Factory Pattern  </summary>  
+  
+  
+- 모양과 효과는 비슷하지만,,,  
+둘 다 구체적인 객체 생성 과정을 추상화한 인터페이스를 제공한다.  
+  
+  
+- 관점이 다르다  
+팩토리 메서드 패턴은 "팩토리를 구현하는 방법"에 초점을 둔다.  
+추상 팩토리 패턴은 "팩토리를 사용하는 방법"에 초점을 둔다.  
+  
+  
+- 목적이 조금 다르다  
+팩토리 메서드 패턴은 구체적인 객체 생성 과정을 하위 또는 구체적인 클래스로 옮기는 것이 목적.  
+추상 팩토리 패턴은 관련있는 여러 객체를 구체적인 클래스에 의존하지 않고 만들 수 있게 해주는 것이 목적.  
+  
+
+> 소스 내부 _04_study의 Computer Class를 기반으로 팩토리, 추상 팩토리 패턴 비교
+<img width="2302" alt="스크린샷 2022-12-03 오후 6 20 28" src="https://user-images.githubusercontent.com/94272140/205433753-564fc281-9cec-41ac-8d04-72c640cafc97.png">
+
+
+
+</details>
+
+
+
+
+
+
+
+
 
 
 
@@ -220,6 +308,18 @@ JAVA
 - 새 클래스가 생겨 복잡도가 증가할 수 있다. 경우에 따라서는 기존 코드가 해당 인터페이스를 구현하도록 수정하는 것이 좋은 선택이 될 수도 있다.
 
 </details>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
