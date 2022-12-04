@@ -289,6 +289,12 @@ public Ship createShip() {
 
 
 
+
+
+
+
+
+
 ## ***구조 관련 디자인 패턴***  
 
 <details markdown="1">
@@ -314,6 +320,67 @@ public Ship createShip() {
 
 
 
+
+
+<details markdown="1">
+<summary> 6. Fly Weight Pattern  </summary>  
+
+> 객체를 가볍게 만들어 메모리 사용을 줄이는 패턴
+자주 변하는 속성과 변하지 않는 속성을 분리하고 재사용하여 메모리 사용을 줄일 수 있다.
+
+장점  
+- 어플리케이션에서 사용하는 메모리를 줄일 수 있다.
+
+단점  
+- 복잡도가 증가한다.
+
+
+```
+-- old
+// 자주 변하는 속성까지 계속해서 객체를 생성하고 있다.
+Character c1 = new Character('h', "white", "Nanum", 12); 
+Character c2 = new Character('e', "white", "Nanum", 12);
+Character c3 = new Character('l', "white", "Nanum", 12);
+...
+```
+
+```
+-- new
+// fontFamily, fontSize는 자주 변하지 않는 속성이라 판단하여 Font 클래스로 묶고 FontFactory 클래스에서 Cache를 통해 관리한다.
+
+// Font 
+// 인스턴스 공유를 목적으로 하기 때문에 final 키워드를 붙이고 getter만 구현한다.  
+public final class Font {
+
+    final String family;
+    final int size;
+
+    public Font(String family, int size) {
+        this.family = family;
+        this.size = size;
+    }
+
+// FontFactory
+private Map<String, Font> cache = new HashMap<>();
+public Font getFont(String font) {
+  if (cache.containsKey(font)) {
+    return cache.get(font);
+  } else {
+    String[] split = font.split(":");
+    Font newFont = new Font(split[0], Integer.parseInt(split[1]));
+    cache.put(font, newFont);
+    return newFont;
+  }
+}
+
+
+// Client
+FontFactory fontFactory = new FontFactory();
+Character c1 = new Character('h', "white", fontFactory.getFont("nanum:12"));
+Character c2 = new Character('e', "white", fontFactory.getFont("nanum:12"));
+...
+```
+</details>
 
 
 
@@ -413,7 +480,4 @@ BlueLightRedLight game = new BlueLightRedLight();
             }
         });
 ```
-
-
-
 </details>
