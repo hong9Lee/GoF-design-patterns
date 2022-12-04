@@ -343,10 +343,76 @@ public Ship createShip() {
 
 단점
 - 연쇄적으로 흘러가다 보니 디버깅이 번거로울 수 있다.
+</details>
 
 
 
 
+
+
+
+
+<details markdown="1">
+<summary> 9. Strategy Pattern (전략 패턴)  </summary>  
+
+> 일을 수행하는 방법이 여러가지 일때, 여러 알고리즘을 각각의 개별적인 클래스로 캡슐화를 하고 캡슐화되어있는 것을 공통의 인터페이스로 추상화 해서  
+로직을 사용하는 곳에서는 추상화된 인터페이스만 사용함으로써 코드는 바뀌지 않지만 알고리즘을 바꿔낄수 있는 패턴이다.
+
+> 여러 알고리즘을 캡슐화 하고 상호 교환 가능하게 만드는 패턴.  
+컨텍스트에서 사용할 알고리즘을 클라이언트가 직접 선택한다.
+
+장점 
+- 새로운 전략을 추가하더라도 기존 코드를 변경하지 않는다.
+- 상속 대신 위임을 사용할 수 있다.
+- 런타임에 전략을 변경할 수 있다.
+
+
+단점
+- 복잡도가 증가한다.
+- 클라이언트 코드가 구체적인 전략을 알아야 한다.
+
+```
+1. Speed라는 인터페이스를 상속받은 전략 클래스를 생성한다.
+public class Normal implements Speed {
+    @Override
+    public void blueLight() {
+        System.out.println("무 궁 화    꽃   이");
+    }
+
+    @Override
+    public void redLight() {
+        System.out.println("피 었 습 니  다.");
+    }
+...
+
+2. 파라미터로 인터페이스를 받아 사용한다.
+public class BlueLightRedLight {
+  public void blueLight(Speed speed) {
+        speed.blueLight();
+    }
+
+    public void redLight(Speed speed) {
+        speed.redLight();
+    }
+    ...
+
+3. 전략만 바꿔주며 사용이 가능하며 익명클래스로 사용할 수 있다.
+BlueLightRedLight game = new BlueLightRedLight();
+        game.blueLight(new Normal());
+        game.redLight(new Faster());
+
+        game.blueLight(new Speed() {
+            @Override
+            public void blueLight() {
+
+            }
+
+            @Override
+            public void redLight() {
+
+            }
+        });
+```
 
 
 
