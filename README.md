@@ -437,6 +437,7 @@ Character c2 = new Character('e', "white", fontFactory.getFont("nanum:12"));
 ```
 -- old
 receiver에 해당하는 코드를 직접 사용하기 때문에, receiver의 코드가 바뀌면 모든 invoker의 코드가 바뀌게 된다.
+
 public Button(Light light) {
         this.light = light;
 }
@@ -451,8 +452,9 @@ public static void main(String[] args) {
   button.press();
   ...
 }       
+```
 
-
+```
 -- new
 command 패턴을 사용하게 되면 command만 바뀐다.
 receiver(Light)가 바뀌더라도 invoker(Button)의 변화 범위가 없거나 축소된다.
