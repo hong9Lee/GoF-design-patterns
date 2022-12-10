@@ -5,5 +5,8 @@ public class App {
     public static void main(String[] args) {
         Brush redBrush = new HBPencil(new Red());
         redBrush.draw();
+
+        Drawer drawer = new Drawer(new HBPencil(new Red()));
+        drawer.action();
     }
 }
