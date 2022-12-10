@@ -318,6 +318,74 @@ public Ship createShip() {
 
 
 
+<details markdown="1">
+<summary> 2. Bridge Pattern  </summary>  
+
+> 추상적인 것과 구체적인 것을 분리하여 연결하는 패턴
+하나의 계층 구조일 때 보다 각기 나누었을 때 독립적인 계층 구조로 발전시킬 수 있다.
+서로 성격이 상이한 것들을 분리해 하나의 계층구조가 아닌 둘 사이를 연결하는 브릿지 패턴
+
+
+장점
+- 추상적인 코드를 구체적인 코드 변경 없이도 독립적으로 확장할 수 있다.
+- 추상적인 코드와 구체적인 코드를 분리할 수 있다.
+
+단점 
+- 계층 구조가 늘어나 복잡도가 증가할 수 있다.
+
+
+```
+--old
+기존 소스는 Champion interface를 구현하여 같은 동작을 하는 소스를 계속 작성해야한다.
+public class KDA아리 implements Champion {
+
+    @Override
+    public void move() {
+        System.out.println("KDA 아리 move");
+    }
+
+    @Override
+    public void skillQ() {
+        System.out.println("KDA 아리 Q");
+    }
+
+-- new
+Champion를 구현한 DefaultChampion 브릿지를 만들어 추상적인코드를 구체적인 코드 변경 없이도 독립적으로 확장할 수 있게 만든다.
+public class DefaultCampion implements Champion {
+
+    private Skin skin;
+    private String name;
+
+    public DefaultCampion(Skin skin, String name) {
+        this.skin = skin;
+        this.name = name;
+    }
+
+    @Override
+    public void move() {
+        System.out.printf("%s %s move\n", skin.getName(), this.name);
+    }
+
+    @Override
+    public void skillQ() {
+        System.out.printf("%s %s skill Q\n", skin.getName(), this.name);
+    }
+    ...
+    
+    
+// 구체적인 챔피언 클래스    
+public class 아리 extends DefaultCampion {
+
+public 아리(Skin skin) {
+        super(skin, "아리");
+    }
+}
+
+
+```
+
+
+</details>
 
 
 
