@@ -380,12 +380,97 @@ public 아리(Skin skin) {
         super(skin, "아리");
     }
 }
+```
+</details>
+
+
+
+<details markdown="1">
+<summary> 4. Decorator Pattern  </summary>  
+
+> 기존 코드를 변경하지 않고 부가 기능을 추가하는 패턴  
+상속이 아닌 위임을 사용해서 보다 유연하게(런타임에) 부가 기능을 추가하는 것도 가능하다.  
+
+
+장점  
+- 새로운 클래스를 만들지 않고 기존 기능을 조합할 수 있다.  
+- 컴파일 타임이 아닌 런타임에 동적으로 기능을 변경할 수 있다.  
+  
+단점  
+- 데코레이터를 조합하는 코드가 복잡할 수 있다.  
+
+
 
 
 ```
+-- old
+클라이언트의 코드는 바뀌지 않지만, trimming과 spam filtering을 동시에 적용할 수 없는 상속의 한계가 있다.
+Client client = new Client(new SpamFilteringCommentService()); <--
+Client client = new Client(new TrimmingCommentService());      <--
+client.writeComment("오징어게임");
+client.writeComment("보는게 하는거 보다 재밌을 수가 없지...");
+client.writeComment("http://whiteship.me");
+
+
+-- new  
+
+1. 본연의 일만 담당하는 trimming과 spam filtering class를 만들어 단일책임원칙을 지킬 수 있다.  
+public class SpamFilteringCommentDecorator extends CommentDecorator {
+
+    public SpamFilteringCommentDecorator(CommentService commentService) {
+        super(commentService);
+    }
+
+    @Override
+    public void addComment(String comment) {
+        if (isNotSpam(comment)) {
+            super.addComment(comment);
+        }
+    }
+    ...
+
+
+2. 또, 상속이 아닌 인터페이스를 사용하기때문에 filtering의 조합을 자유롭게 사용할 수 있는 장점이 있다.
+if(enabledSpamFilter) {
+  commentService = new SpamFilteringCommentDecorator(commentService);
+}
+
+if(enabledTrimming) {
+  commentService = new TrimmingCommentDecorator(commentService);
+}
+
+
+3. filter가 추가되거나 조합한다 하더라도 DefaultCommentService나 Client의 코드는 전혀 변경이 없으며,  
+소스의 변경 없이 확장 가능한 개방폐쇄의 원칙을 지킬 수 있다.  
+public class DefaultCommentService implements CommentService {
+
+    @Override
+    public void addComment(String comment) {
+        System.out.println(comment);
+    }
+    
+    기능의 확장 ...
+
+// App
+CommentService commentService = new DefaultCommentService();
+
+
+4. 클라이언트 코드가 인터페이스를 사용하여 의존성을 역전할 수 있기 때문에 의존역전원칙을 지킬 수 있다.  
+private CommentService commentService;
+
+public Client(CommentService commentService) {
+  this.commentService = commentService;
+}
+
+public void writeComment(String comment) {
+  commentService.addComment(comment);
+}
+```
+
 
 
 </details>
+
 
 
 
