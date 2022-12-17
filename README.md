@@ -696,3 +696,111 @@ BlueLightRedLight game = new BlueLightRedLight();
         });
 ```
 </details>
+
+
+
+
+
+
+
+<details markdown="1">
+<summary> 10. Template Method Pattern (템플릿 메서드 패턴, 템플릿 콜백 패턴) </summary>  
+
+> 알고리즘 구조를 서브 클래스가 확장할 수 있도록 템플릿으로 제공하는 방법.  
+추상 클래스는 템플릿을 제공하고 하위 클래스는 구체적인 알고리즘을 제공한다.  
+
+장점 
+- 템플릿 코드를 재사용하고 중복 코드를 줄일 수 있다.  
+- 템플릿 코드를 변경하지 않고 상속을 받아서 구체적인 알고리즘만 변경할 수 있다.  
+
+단점  
+- 리스코프 치환 원칙을 위반할 수도 있다.  
+- 알고리즘 구조가 복잡할수록 템플릿을 유지하기 어려워진다.  
+
+
+
+
+```
+같은 로직을 사용하는 메서드 내부의 소스를 템플릿으로 제공하기 위해 class를 abstract class로 만든다.
+
+public int process() {
+        try(BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            int result = 0;
+            String line = null;
+            while((line = reader.readLine()) != null) {
+                result = getResult(result, Integer.parseInt(line));  <<<<<<<<<<<<<<<<<<<<<<
+            }
+            return result;
+        } catch (IOException e) {
+            throw new IllegalArgumentException(path + "에 해당하는 파일이 없습니다.", e);
+        }
+    }
+
+protected abstract int getResult(int result, int number);
+
+
+// 곱하기, 더하기 등의 구체적인 클래스에서 상속받아 abstract 메서드를 구현한다.
+@Override
+protected int getResult(int result, int number) {
+  return result += number;
+}
+```
+
+- 템플릿 콜백 패턴
+> 콜백으로 상속 대신 위임을 사용하는 템플릿 패턴.  
+상속 대신 익명 내부 클래스 또는 람다 표현식을 활용할 수 있다.  
+
+```
+템플릿 콜백 패턴을 사용하여 위 소스를 좀 더 간한하게 리팩토링 할 수 있다.
+
+// 1. 목적에 맞게 구현될 메서드 getResult를 인터페이스화 시킨다.
+public interface Operator {
+    int getResult(int result, int number);
+}
+
+// 2. 인터페이스를 파라미터로 받아 사용한다.
+public int process(Operator operator) {
+        try(BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            int result = 0;
+            String line = null;
+            while((line = reader.readLine()) != null) {
+                result = operator.getResult(result, Integer.parseInt(line));
+            }
+            return result;
+        } catch (IOException e) {
+            throw new IllegalArgumentException(path + "에 해당하는 파일이 없습니다.", e);
+        }
+}
+
+// 3. 익명 내부 클래스 혹은 람다식으로 목적에 맞게 구현하여 사용한다.
+FileProcessor fileProcessor = new FileProcessor("number.txt");
+
+int result = fileProcessor.process(new Operator() {
+            @Override
+            public int getResult(int result, int number) {
+                return result += number;
+            }
+        });
+        
+OR        
+       
+int result = fileProcessor.process((result1, number) -> result1 += number);
+
+// 4. 여러곳에서 사용되는 로직이라면 클래스로 구현하여 만들어 사용할수도 있다.
+public class Plus implements Operator {
+    @Override
+    public int getResult(int result, int number) {
+        return result += number;
+    }
+}
+
+int result = fileProcessor.process(new Plus());
+```
+
+
+
+
+</details>
+
+
+
