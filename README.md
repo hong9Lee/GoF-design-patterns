@@ -3,7 +3,9 @@
 ## ***객체 생성 관련 디자인 패턴***
 
 <details markdown="1">
-<summary> 1. Singleton Pattern  </summary>  
+<summary> 
+
+#### ***1. Singleton Pattern***  </summary>  
   
   
 > 인스턴스를 오직 한개만 제공하는 클래스  
@@ -101,7 +103,9 @@ System.out.println(object == object1) ==> false
 
 
 <details markdown="1">
-<summary> 2. Factory method Pattern  </summary>  
+<summary> 
+
+#### ***2. Factory method Pattern***  </summary>  
 
 > 구체적으로 어떤 인스턴스를 만들지는 서브클래스가 정한다.  
 다양한 구현체가 있고, 그 중에서 특정한 구현체를 만들 수 있는 다양한 팩토리를 제공할 수 있다.
@@ -206,7 +210,9 @@ JAVA
 
 
 <details markdown="1">
-<summary> 3. Abstract Factory Pattern  </summary>  
+<summary> 
+
+#### ***3. Abstract Factory Pattern***  </summary>  
 
 
 > 서로 관련있는 여러 객체를 만들어주는 인터페이스  
@@ -255,7 +261,9 @@ public Ship createShip() {
 
 
 <details markdown="1">
-<summary> 4. Factory Method Pattern VS Abstract Factory Pattern  </summary>  
+<summary> 
+
+#### ***4. Factory Method Pattern VS Abstract Factory Pattern***  </summary>  
   
   
 - 모양과 효과는 비슷하지만,,,  
@@ -298,7 +306,9 @@ public Ship createShip() {
 ## ***구조 관련 디자인 패턴***  
 
 <details markdown="1">
-<summary> 1. Adapter Pattern  </summary>  
+<summary> 
+
+#### ***1. Adapter Pattern***  </summary>  
   
   
 > 기존 코드를 클라이언트가 사용하는 인터페이스의 구현체로 바꿔주는 패턴
@@ -319,7 +329,9 @@ public Ship createShip() {
 
 
 <details markdown="1">
-<summary> 2. Bridge Pattern  </summary>  
+<summary> 
+
+#### ***2. Bridge Pattern***  </summary>  
 
 > 추상적인 것과 구체적인 것을 분리하여 연결하는 패턴
 하나의 계층 구조일 때 보다 각기 나누었을 때 독립적인 계층 구조로 발전시킬 수 있다.
@@ -386,7 +398,9 @@ public 아리(Skin skin) {
 
 
 <details markdown="1">
-<summary> 4. Decorator Pattern  </summary>  
+<summary> 
+
+#### ***4. Decorator Pattern***  </summary>  
 
 > 기존 코드를 변경하지 않고 부가 기능을 추가하는 패턴  
 상속이 아닌 위임을 사용해서 보다 유연하게(런타임에) 부가 기능을 추가하는 것도 가능하다.  
@@ -476,7 +490,9 @@ public void writeComment(String comment) {
 
 
 <details markdown="1">
-<summary> 6. Fly Weight Pattern  </summary>  
+<summary> 
+
+#### ***6. Fly Weight Pattern***  </summary>  
 
 > 객체를 가볍게 만들어 메모리 사용을 줄이는 패턴
 자주 변하는 속성과 변하지 않는 속성을 분리하고 재사용하여 메모리 사용을 줄일 수 있다.
@@ -548,7 +564,9 @@ Character c2 = new Character('e', "white", fontFactory.getFont("nanum:12"));
 
 
 <details markdown="1">
-<summary> 1. Chain-of-Responsibility Pattern (책임 연쇄 패턴)  </summary>  
+<summary> 
+
+#### ***1. Chain-of-Responsibility Pattern (책임 연쇄 패턴)***  </summary>  
   
   
 > 요청을 보내는 쪽(sender)과 요청을 처리하는 쪽(receiver)의 분리하는 패턴
@@ -571,7 +589,9 @@ Character c2 = new Character('e', "white", fontFactory.getFont("nanum:12"));
 
 
 <details markdown="1">
-<summary> 2. Command Pattern (커맨드 패턴)  </summary>  
+<summary> 
+
+#### ***2. Command Pattern (커맨드 패턴)***  </summary>  
   
 > 요청을 캡슐화 하여 호출자(invoker)와 수신자(receiver)를 분리하는 패턴.  
 요청을 처리하는 방법이 바뀌더라도, 호출자의 코드는 변경되지 않는다.  
@@ -635,7 +655,9 @@ public static void main(String[] args) {
 
 
 <details markdown="1">
-<summary> 9. Strategy Pattern (전략 패턴)  </summary>  
+<summary> 
+
+#### ***9. Strategy Pattern (전략 패턴)***  </summary>  
 
 > 일을 수행하는 방법이 여러가지 일때, 여러 알고리즘을 각각의 개별적인 클래스로 캡슐화를 하고 캡슐화되어있는 것을 공통의 인터페이스로 추상화 해서  
 로직을 사용하는 곳에서는 추상화된 인터페이스만 사용함으로써 코드는 바뀌지 않지만 알고리즘을 바꿔낄수 있는 패턴이다.
@@ -704,7 +726,9 @@ BlueLightRedLight game = new BlueLightRedLight();
 
 
 <details markdown="1">
-<summary> 10. Template Method Pattern (템플릿 메서드 패턴, 템플릿 콜백 패턴) </summary>  
+<summary> 
+
+#### ***10. Template Method Pattern (템플릿 메서드 패턴, 템플릿 콜백 패턴)*** </summary>  
 
 > 알고리즘 구조를 서브 클래스가 확장할 수 있도록 템플릿으로 제공하는 방법.  
 추상 클래스는 템플릿을 제공하고 하위 클래스는 구체적인 알고리즘을 제공한다.  
